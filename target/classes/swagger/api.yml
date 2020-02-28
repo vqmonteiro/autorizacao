@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: Api do banco para autorizacao
+  version: 1.0.0
+servers:
+  - url: /v1
+paths:
+  '/autorizacao/':
+    post:
+      operationId: autorizacaoCartao
+      summary: Realizar a validação de uma transação
+      description: Recurso para realizar uma transação
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutorizacaoDTO'
+      responses:
+        '200':
+          $ref: '#/components/responses/Ok'
+        '400':
+          $ref: '#/components/responses/NaoAutorizado'
+components:
+  responses:
+    Ok:
+      description: Transação autorizada
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutorizacaoDTO'
+    NaoAutorizado:
+      description: Transação não autorizada
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutorizacaoDTO'
+  schemas:
+    AutorizacaoDTO:
+      type: object
+      description: Entrada de dados
+      properties:
+        numeroCartao:
+          type: string
+          description: Nome do grupo
+      required:
+        - numeroCartao
